@@ -33,7 +33,9 @@ Instead of waiting for responses from all workers before performing a synchronou
 Thus, it creates a framework for Federated Multi-Task Learning.
 
 ## Intuition Behind the Method
-
+Intuitivly, We believe that MOCHA works better than the previously proposed frameworks mainly due to two reasons :
+  1. Avoids Stragglers effects by providing $t-th$ node to flexibilly approximately solve the node's subproblem
+  2. the approach is based on bi-convex alternation, thus guaranteed to converge.
 
 ## Improvements over the Basic Algorithms
 
