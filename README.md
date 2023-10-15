@@ -37,3 +37,8 @@ Thus, it creates a framework for Federated Multi-Task Learning.
 
 ## Improvements over the Basic Algorithms
 
+The general setup for MTL is as follows 
+
+$$ min_{W,\Omega}{\sum_{t=1}^{m}\sum_{i=1}^{n_t} l_t(w_t^T x_t^i , y_t^i) + R(W, \Omega)}$$
+
+in which $W := [w_1, ..., w_m] \in R^{d*m}$ is a matrix whose $t-th$ column is the weight vector of the $i-th$ task. While the matrix $ \Omega \in R^{m*m} $ models relations between tasks and either known or estimated while learning task models. The paper propose new approach to solve the minimization optimization problem alternatively by fixing $\Omega$ and optimizing over $W$ and vice versa. However, when solving for $\Omega$ is not dependant on the input data thus, unlike previous approaches, $\Omega$ now could be computed centrally.  
