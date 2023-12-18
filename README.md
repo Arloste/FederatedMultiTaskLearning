@@ -80,5 +80,5 @@ The experiment includes three different model types:
 Results
 After conducting the experiments with 10 trials of a gridsearch on lambda regularization parameter, the mean error of prediction was calculated for each model type. Interestingly, the MOCHA model outperformed the rest with a significant margin. It is noted that MBSGD might have performed better with a higher number of iterations. Surprisingly, the fully local and fully global models did not show a significant difference in performance on this specific dataset.
 
-<img src="/results.jpeg" width="128"/>
+![/results](results.jpeg)
 
