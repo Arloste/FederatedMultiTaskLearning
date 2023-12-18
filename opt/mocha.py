@@ -3,6 +3,17 @@ import scipy
 
 
 def compute_primal(X, Y, W, Omega, lambda_):
+    """
+    Compute the primal objective function value.
+
+    :param X: Feature matrix of shape (num_samples, num_features)
+    :param Y: Label matrix of shape (num_samples, num_classes)
+    :param W: Weight matrix of shape (num_features, num_classes)
+    :param Omega: Regularization matrix of shape (num_classes, num_classes)
+    :param lambda_: Regularization parameter
+    :return: Primal objective function value
+
+    """
     total_loss = 0
     for t in range(len(X)):
         preds = Y[t] @ (X[t] @ W[:, t])
@@ -12,6 +23,16 @@ def compute_primal(X, Y, W, Omega, lambda_):
 
 
 def compute_dual(alpha, Y, W, Omega, lambda_):
+    """
+    Compute the dual objective function for a given set of parameters.
+
+    :param alpha: A list of alpha values.
+    :param Y: A list of Y values.
+    :param W: A matrix W.
+    :param Omega: A matrix Omega.
+    :param lambda_: A scalar value lambda_.
+    :return: The computed dual objective function value.
+    """
     total_alpha = 0
     for tt in range(len(Y)):
         total_alpha += (-1.0 * alpha[tt] * Y[tt]).mean()
@@ -20,6 +41,17 @@ def compute_dual(alpha, Y, W, Omega, lambda_):
 
 
 def compute_rmse(X, Y, W, type='R', avg=True):
+    """
+    Compute Root Mean Square Error (RMSE) or Mean Error Rate (MER) for given data.
+
+    :param X: Input data.
+    :param Y: Target data.
+    :param W: Weight matrix.
+    :param type: Type of error calculation. Default is 'R' for RMSE.
+    :param avg: Whether to compute average error or not. Default is True.
+
+    :return: RMSE or MER value.
+    """
     m = len(X)
     Y_hat = [0] * m
     for t in range(m):
@@ -47,7 +79,26 @@ def compute_rmse(X, Y, W, type='R', avg=True):
 
 
 def run_mocha(Xtrain, Ytrain, Xtest, Ytest, lambda_, opts, problem_type='R', avg=True):
+    """
 
+    :param Xtrain: numpy array. Training data for all tasks. Shape: (m, n, d), where m is the number of tasks, n is the number of samples in each task, and d is the number of features.
+    :param Ytrain: list of numpy arrays. Training labels for all tasks. Length of the list is equal to m. Each numpy array represents the labels for a single task. Shape of each numpy array
+    *: (n,).
+    :param Xtest: numpy array. Test data for all tasks. Shape: (m, n, d), where m is the number of tasks, n is the number of samples in each task, and d is the number of features.
+    :param Ytest: list of numpy arrays. Test labels for all tasks. Length of the list is equal to m. Each numpy array represents the labels for a single task. Shape of each numpy array:
+    * (n,).
+    :param lambda_: float. Regularization parameter.
+    :param opts: dictionary. Dictionary containing various options for the method.
+    :param problem_type: str. Type of problem. Default is 'R' for regression.
+    :param avg: bool. Whether to average the predictions of all tasks. Default is True.
+    :return: tuple. A tuple containing the following:
+
+        - rmse: numpy array. Root mean squared error for each outer iteration. Shape: (opts["mocha_outer_iters"],).
+        - primal_objs: numpy array. Primal objective value for each outer iteration. Shape: (opts["mocha_outer_iters"],).
+        - dual_objs: numpy array. Dual objective value for each outer iteration. Shape: (opts["mocha_outer_iters"],).
+        - W: numpy array. Weight matrix. Shape: (d, m).
+
+    """
     m = len(Xtrain)  # number of tasks
     d = Xtrain[0].shape[1]  # number of features
     W = np.random.randn(d, m)
