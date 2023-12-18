@@ -44,3 +44,39 @@ The general setup for MTL is as follows
 $$ min_{W,\Omega}{\sum_{t=1}^{m}\sum_{i=1}^{n_t} l_t(w_t^T x_t^i , y_t^i) + R(W, \Omega)}$$
 
 in which $W := [w_1, ..., w_m] \in R^{d*m}$ is a matrix whose $t-th$ column is the weight vector of the $i-th$ task. While the matrix $ \Omega \in R^{m*m} $ models relations between tasks and either known or estimated while learning task models. The paper propose new approach to solve the minimization optimization problem alternatively by fixing $\Omega$ and optimizing over $W$ and vice versa. However, when solving for $\Omega$ is not dependant on the input data thus, unlike previous approaches, $\Omega$ now could be computed centrally.  
+
+# Reproducing Paper Results
+## Data Preprocessing
+The dataset is preprocessed to prepare it for training the models.
+
+## Gridsearch with Shuffling
+To ensure fairness, we implemented grid search for 10 trials. In each trial, the dataset is shuffled, and the grid search is performed over the regularizer parameter.
+
+## Hyperparameters
+We used all recommended hyperparameters mentioned by the authors, except for the inner iterations count, which was reduced to accommodate computational limitations.
+
+##Experimental Setup
+The experiment includes three different model types:
+
+1. Fully Local Model 
+
+- SVM models are trained for each local node.
+- Predictions are averaged.
+- You can find its implementation in opt/baselines.py
+  
+2- Fully Global Model
+
+- A single SVM model is trained using all available data.
+- You can find its implementation in opt/baselines.py
+  
+3. Multitask Learning Models (MBSGD and MOCHA)
+
+- SVM is used in both.
+- MBSGD involves stochastic gradient descent.
+- MOCHA uses a different approach.
+- You can find their implementations in opt/mbsgd.py and opt/mocha.py respectively
+
+
+Results
+After conducting the experiments with 10 trials of a gridsearch on lambda regularization parameter, the mean error of prediction was calculated for each model type. Interestingly, the MOCHA model outperformed the rest with a significant margin. It is noted that MBSGD might have performed better with a higher number of iterations. Surprisingly, the fully local and fully global models did not show a significant difference in performance on this specific dataset.
+
