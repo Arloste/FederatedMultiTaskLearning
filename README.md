@@ -55,7 +55,7 @@ To ensure fairness, we implemented grid search for 10 trials. In each trial, the
 ## Hyperparameters
 We used all recommended hyperparameters mentioned by the authors, except for the inner iterations count, which was reduced to accommodate computational limitations.
 
-##Experimental Setup
+## Experimental Setup
 The experiment includes three different model types:
 
 1. Fully Local Model 
